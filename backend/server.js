@@ -13,7 +13,12 @@ const PORT = process.env.PORT || 3001;
 const security = require('./middleware/security');
 
 
-app.use(helmet());
+const helmet = require("helmet");
+app.use(
+    helmet({
+        contentSecurityPolicy: false,
+    })
+);
 app.use(security.securityHeaders);
 
 
@@ -241,7 +246,7 @@ app.get('/api/profile/:userId', (req, res) => {
             return res.status(404).json({ success: false, message: 'User not found' });
         }
         const user = results[0];
-        
+
         const skillsQuery = 'SELECT skill_name FROM user_skills WHERE user_id = ?';
         db.query(skillsQuery, [userId], (err, skillsResults) => {
             user.skills = skillsResults ? skillsResults.map(s => s.skill_name) : [];
