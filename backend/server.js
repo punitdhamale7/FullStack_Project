@@ -12,8 +12,6 @@ const PORT = process.env.PORT || 3001;
 
 const security = require('./middleware/security');
 
-
-const helmet = require("helmet");
 app.use(
     helmet({
         contentSecurityPolicy: false,
