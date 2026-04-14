@@ -1,12 +1,11 @@
 const rateLimit = require('express-rate-limit');
-const helmet = require('helmet');
 const { body, validationResult } = require('express-validator');
 
 
 const apiLimiter = process.env.NODE_ENV === 'production'
     ? rateLimit({
-        windowMs: 15 * 60 * 1000, 
-        max: 100, 
+        windowMs: 15 * 60 * 1000,
+        max: 100,
         message: {
             success: false,
             message: 'Too many requests from this IP, please try again after 15 minutes'
@@ -17,38 +16,38 @@ const apiLimiter = process.env.NODE_ENV === 'production'
     : (req, res, next) => next();
 
 
-const loginLimiter = process.env.NODE_ENV === 'production' 
+const loginLimiter = process.env.NODE_ENV === 'production'
     ? rateLimit({
-        windowMs: 15 * 60 * 1000, 
-        max: 20, 
+        windowMs: 15 * 60 * 1000,
+        max: 20,
         message: {
             success: false,
             message: 'Too many login attempts, please try again after 15 minutes'
         },
         standardHeaders: true,
         legacyHeaders: false,
-        skipSuccessfulRequests: true 
+        skipSuccessfulRequests: true
     })
     : (req, res, next) => next();
 
 
 const registerLimiter = process.env.NODE_ENV === 'production'
     ? rateLimit({
-        windowMs: 60 * 60 * 1000, 
-        max: 10, 
+        windowMs: 60 * 60 * 1000,
+        max: 10,
         message: {
             success: false,
             message: 'Too many registration attempts, please try again after 1 hour'
         },
         standardHeaders: true,
         legacyHeaders: false,
-        skipSuccessfulRequests: true 
+        skipSuccessfulRequests: true
     })
     : (req, res, next) => next();
 
 
 const sanitizeInput = (req, res, next) => {
-    
+
     const skipFields = ['password', 'newPassword', 'current_password', 'confirmPassword', 'token', 'refreshToken'];
 
     const sanitizeString = (str) => {
@@ -92,8 +91,8 @@ const preventSQLInjection = (req, res, next) => {
     const checkForSQL = (value) => {
         if (typeof value !== 'string') return false;
         const upperValue = value.toUpperCase();
-        return sqlKeywords.some(keyword => 
-            upperValue.includes(keyword) && 
+        return sqlKeywords.some(keyword =>
+            upperValue.includes(keyword) &&
             (upperValue.includes('(') || upperValue.includes(')') || upperValue.includes(';'))
         );
     };
@@ -166,7 +165,7 @@ const securityHeaders = (req, res, next) => {
     res.setHeader('X-XSS-Protection', '1; mode=block');
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
     res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
-    
+
     next();
 };
 
@@ -196,18 +195,18 @@ const validationRules = {
     email: body('email')
         .isEmail().withMessage('Please provide a valid email address')
         .normalizeEmail(),
-    
+
     password: body('password')
         .isLength({ min: 8 }).withMessage('Password must be at least 8 characters long')
         .matches(/[A-Z]/).withMessage('Password must contain at least one uppercase letter')
         .matches(/[a-z]/).withMessage('Password must contain at least one lowercase letter')
         .matches(/\d/).withMessage('Password must contain at least one number')
         .matches(/[!@#$%^&*(),.?":{}|<>]/).withMessage('Password must contain at least one special character'),
-    
+
     username: body('username')
         .isLength({ min: 3, max: 20 }).withMessage('Username must be between 3 and 20 characters')
         .matches(/^[a-zA-Z0-9_]+$/).withMessage('Username can only contain letters, numbers, and underscores'),
-    
+
     fullName: body('fullName')
         .isLength({ min: 2, max: 50 }).withMessage('Full name must be between 2 and 50 characters')
         .matches(/^[a-zA-Z\s]+$/).withMessage('Full name can only contain letters and spaces')
