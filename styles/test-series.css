@@ -1,0 +1,179 @@
+/* ── Test Series - Admin ── */
+.content-area {
+    padding: 24px;
+    max-width: 1100px;
+}
+
+.test-series-admin-list { display: flex; flex-direction: column; gap: 16px; }
+
+.ts-admin-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 20px 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.05);
+}
+.ts-admin-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.ts-admin-title { font-size: 17px; font-weight: 700; color: #111827; margin: 0 0 4px; }
+.ts-admin-meta { font-size: 13px; color: #6b7280; margin: 0; }
+.ts-admin-info-row { display: flex; gap: 20px; flex-wrap: wrap; font-size: 13px; color: #6b7280; margin-bottom: 14px; }
+.ts-admin-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.ts-badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.ts-badge-upcoming { background: #f3f4f6; color: #6b7280; }
+.ts-badge-live { background: #fef2f2; color: #ef4444; }
+.ts-badge-ended { background: #f3f4f6; color: #6b7280; }
+
+.ts-empty { display: flex; flex-direction: column; align-items: center; padding: 60px 20px; color: #9ca3af; text-align: center; }
+
+/* ── Test Series Builder Tabs ── */
+.ts-builder-tabs { display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 2px solid #e5e7eb; padding-bottom: 0; }
+.ts-tab {
+    padding: 10px 20px; border: none; background: none; cursor: pointer;
+    font-size: 14px; font-weight: 600; color: #6b7280; border-bottom: 3px solid transparent;
+    margin-bottom: -2px; transition: all .2s;
+}
+.ts-tab.active { color: #4b5563; border-bottom-color: #4b5563; }
+.ts-tab-content { display: none; }
+.ts-tab-content.active { display: block; }
+
+/* ── Leaderboard in admin ── */
+.ts-rank-badge { font-size: 16px; }
+
+/* ══════════════════════════════════════════
+   STUDENT TEST SERIES PAGE
+══════════════════════════════════════════ */
+.ts-notification-banner {
+    display: flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, #4b5563, #374151);
+    color: #fff; padding: 14px 20px; border-radius: 12px;
+    font-size: 14px; margin-bottom: 24px;
+}
+
+.ts-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+
+.ts-card {
+    background: #fff; border: 1px solid #e5e7eb; border-radius: 16px;
+    padding: 22px; box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    display: flex; flex-direction: column; gap: 12px;
+    transition: box-shadow .2s, transform .2s;
+}
+.ts-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.1); transform: translateY(-2px); }
+
+.ts-card-header { display: flex; align-items: flex-start; gap: 14px; }
+.ts-card-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: linear-gradient(135deg, #4b5563, #374151);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; flex-shrink: 0;
+}
+.ts-card-title { font-size: 16px; font-weight: 700; color: #111827; margin: 0 0 6px; }
+.ts-card-desc { font-size: 13px; color: #6b7280; margin: 0; line-height: 1.5; }
+.ts-card-meta { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: #9ca3af; }
+.ts-card-footer { margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
+
+.ts-countdown { font-size: 13px; color: #6b7280; text-align: center; }
+.ts-time-left { font-size: 13px; color: #ef4444; font-weight: 600; text-align: center; }
+
+.ts-action-btn { width: 100%; padding: 10px; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; border: none; }
+.ts-action-btn:disabled { opacity: .5; cursor: not-allowed; }
+.ts-btn-live { background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; animation: pulse-btn 2s infinite; }
+@keyframes pulse-btn { 0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.4)} 50%{box-shadow:0 0 0 8px rgba(239,68,68,0)} }
+
+.ts-empty-state { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 80px 20px; color: #9ca3af; text-align: center; }
+.ts-empty-state h3 { font-size: 20px; color: #374151; margin: 0; }
+
+/* ── Test Taking ── */
+.ts-test-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+.ts-timer-box {
+    display: flex; align-items: center; gap: 8px;
+    background: #fff; border: 2px solid #e5e7eb; border-radius: 12px;
+    padding: 10px 18px; font-size: 22px; font-weight: 700; color: #374151;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+.ts-timer-urgent { border-color: #ef4444; color: #ef4444; animation: blink .8s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.5} }
+
+.ts-question-card {
+    background: #fff; border: 1px solid #e5e7eb; border-radius: 14px;
+    padding: 22px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.05);
+}
+.ts-q-num { font-size: 12px; font-weight: 700; color: #4b5563; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
+.ts-q-total { color: #9ca3af; font-weight: 400; }
+.ts-q-text { font-size: 16px; font-weight: 600; color: #111827; margin: 0 0 16px; line-height: 1.5; }
+
+.ts-options { display: flex; flex-direction: column; gap: 10px; }
+.ts-option-label {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 10px;
+    cursor: pointer; transition: all .15s; font-size: 14px;
+}
+.ts-option-label:hover { border-color: #4b5563; background: #f9fafb; }
+.ts-option-label.selected { border-color: #4b5563; background: #e5e7eb; }
+.ts-option-label input[type="radio"] { display: none; }
+.ts-option-key {
+    width: 28px; height: 28px; border-radius: 50%; background: #f3f4f6;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px; color: #374151; flex-shrink: 0;
+}
+.ts-option-label.selected .ts-option-key { background: #4b5563; color: #fff; }
+.ts-option-text { flex: 1; color: #374151; }
+
+.ts-submit-row { display: flex; justify-content: center; padding: 24px 0; }
+.ts-submit-btn { padding: 14px 48px; font-size: 16px; border-radius: 12px; }
+
+/* ── Result ── */
+.ts-result-card {
+    background: #fff; border-radius: 20px; padding: 48px 32px;
+    text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,.08);
+    max-width: 480px; margin: 0 auto;
+}
+.ts-result-icon { font-size: 64px; margin-bottom: 12px; }
+.ts-score-display { display: flex; align-items: baseline; justify-content: center; gap: 4px; margin: 16px 0; }
+.ts-score-num { font-size: 56px; font-weight: 800; color: #4b5563; }
+.ts-score-sep { font-size: 32px; color: #9ca3af; }
+.ts-score-total { font-size: 32px; font-weight: 700; color: #374151; }
+.ts-score-pct { font-size: 20px; color: #6b7280; margin-left: 8px; }
+.ts-result-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+
+/* ── Review ── */
+.ts-review-card { background: #fff; border-radius: 14px; padding: 20px; margin-bottom: 14px; border-left: 4px solid #e5e7eb; }
+.ts-review-correct { border-left-color: #10b981; }
+.ts-review-wrong { border-left-color: #ef4444; }
+.ts-review-q-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.ts-review-num { font-size: 12px; font-weight: 700; color: #6b7280; }
+.ts-review-status { font-size: 13px; font-weight: 700; }
+.ts-review-correct .ts-review-status { color: #10b981; }
+.ts-review-wrong .ts-review-status { color: #ef4444; }
+.ts-review-q-text { font-size: 15px; font-weight: 600; color: #111827; margin: 0 0 12px; }
+.ts-review-options { display: flex; flex-direction: column; gap: 6px; }
+.ts-review-opt { padding: 8px 12px; border-radius: 8px; font-size: 13px; background: #f9fafb; display: flex; gap: 8px; }
+.ts-review-opt-correct { background: #d1fae5; color: #065f46; font-weight: 600; }
+.ts-review-opt-wrong { background: #fee2e2; color: #991b1b; }
+.ts-opt-key { font-weight: 700; min-width: 18px; }
+.ts-review-explanation { margin-top: 10px; padding: 10px 12px; background: #fffbeb; border-radius: 8px; font-size: 13px; color: #92400e; }
+
+/* ── Leaderboard ── */
+.ts-lb-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+.ts-lb-header h2 { margin: 0; font-size: 22px; }
+.ts-my-rank { background: linear-gradient(135deg, #4b5563, #374151); color: #fff; padding: 14px 20px; border-radius: 12px; font-size: 15px; margin-bottom: 16px; }
+.ts-lb-list { display: flex; flex-direction: column; gap: 10px; }
+.ts-lb-row {
+    display: flex; align-items: center; gap: 14px;
+    background: #fff; border: 1px solid #e5e7eb; border-radius: 12px;
+    padding: 14px 18px; box-shadow: 0 1px 4px rgba(0,0,0,.04);
+}
+.ts-lb-mine { border-color: #4b5563; background: #f9fafb; }
+.ts-lb-rank { font-size: 22px; min-width: 40px; text-align: center; }
+.ts-lb-avatar { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; }
+.ts-lb-info { flex: 1; display: flex; flex-direction: column; }
+.ts-lb-name { font-size: 15px; font-weight: 600; color: #111827; }
+.ts-lb-time { font-size: 12px; color: #9ca3af; }
+.ts-lb-score { font-size: 16px; font-weight: 700; color: #374151; text-align: right; }
+.ts-lb-pct { font-size: 12px; color: #6b7280; font-weight: 400; margin-left: 4px; }
+
+@media (max-width: 640px) {
+    .ts-cards-grid { grid-template-columns: 1fr; }
+    .ts-result-card { padding: 32px 20px; }
+    .ts-score-num { font-size: 40px; }
+}

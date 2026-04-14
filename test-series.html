@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Series - LearnAI</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/icons.css">
+    <link rel="stylesheet" href="styles/test-series.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="scripts/config.js"></script>
+    <script src="scripts/api.js"></script>
+</head>
+<body>
+<div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2><span class="icon-3d-wrapper icon-sm icon-indigo" style="margin-right:8px;"><i data-lucide="graduation-cap"></i></span>LearnAI</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item"><span class="nav-icon"><span class="icon-3d-wrapper icon-xs icon-blue"><i data-lucide="layout-dashboard"></i></span></span><span class="nav-text">Dashboard</span></a>
+            <a href="browse-courses.html" class="nav-item"><span class="nav-icon"><span class="icon-3d-wrapper icon-xs icon-orange"><i data-lucide="book-open"></i></span></span><span class="nav-text">Browse Courses</span></a>
+            <a href="my-courses.html" class="nav-item"><span class="nav-icon"><span class="icon-3d-wrapper icon-xs icon-green"><i data-lucide="book"></i></span></span><span class="nav-text">My Courses</span></a>
+            <a href="test-series.html" class="nav-item active"><span class="nav-icon"><span class="icon-3d-wrapper icon-xs icon-purple"><i data-lucide="clipboard-list"></i></span></span><span class="nav-text">Test Series</span></a>
+            <a href="progress.html" class="nav-item"><span class="nav-icon"><span class="icon-3d-wrapper icon-xs icon-indigo"><i data-lucide="bar-chart-2"></i></span></span><span class="nav-text">Progress</span></a>
+            <a href="achievements.html" class="nav-item"><span class="nav-icon"><span class="icon-3d-wrapper icon-xs icon-orange"><i data-lucide="award"></i></span></span><span class="nav-text">Achievements</span></a>
+            <div class="nav-divider"></div>
+            <a href="profile.html" class="nav-item"><span class="nav-icon"><span class="icon-3d-wrapper icon-xs icon-blue"><i data-lucide="user"></i></span></span><span class="nav-text">Profile</span></a>
+            <a href="#" class="nav-item" onclick="window.API && window.API.logout()"><span class="nav-icon"><span class="icon-3d-wrapper icon-xs icon-red"><i data-lucide="log-out"></i></span></span><span class="nav-text">Logout</span></a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('collapsed')"><i data-lucide="menu"></i></button>
+                <h1>Test Series</h1>
+            </div>
+            <div class="topbar-right" id="userDropdownArea"></div>
+        </header>
+
+        <div class="content-area" id="mainView">
+            <div id="notificationBanner" class="ts-notification-banner" style="display:none;"></div>
+            <div id="testSeriesCards" class="ts-cards-grid">
+                <p style="color:#9ca3af;text-align:center;padding:40px;">Loading tests…</p>
+            </div>
+        </div>
+
+        <!-- Test Taking View -->
+        <div class="content-area" id="testView" style="display:none;">
+            <div class="ts-test-header">
+                <div>
+                    <h2 id="testViewTitle"></h2>
+                    <p id="testViewMeta" style="color:#6b7280;font-size:14px;"></p>
+                </div>
+                <div class="ts-timer-box" id="timerBox">
+                    <i data-lucide="clock" style="width:18px;height:18px;"></i>
+                    <span id="timerDisplay">--:--</span>
+                </div>
+            </div>
+            <div id="testQuestionsContainer"></div>
+            <div class="ts-submit-row">
+                <button class="btn-primary ts-submit-btn" onclick="submitTest()">Submit Test</button>
+            </div>
+        </div>
+
+        <!-- Result View -->
+        <div class="content-area" id="resultView" style="display:none;">
+            <div class="ts-result-card">
+                <div class="ts-result-icon" id="resultIcon"></div>
+                <h2 id="resultTitle"></h2>
+                <div class="ts-score-display" id="resultScore"></div>
+                <p id="resultMessage" style="color:#6b7280;margin:8px 0 24px;"></p>
+                <div class="ts-result-actions">
+                    <button class="btn-primary" onclick="showLeaderboard(currentTestId)">🏆 View Leaderboard</button>
+                    <button class="btn-secondary" onclick="showReview()">📋 Review Answers</button>
+                    <button class="btn-secondary" onclick="backToList()">← Back to Tests</button>
+                </div>
+            </div>
+            <div id="reviewSection" style="display:none;margin-top:24px;"></div>
+        </div>
+
+        <!-- Leaderboard View -->
+        <div class="content-area" id="leaderboardView" style="display:none;">
+            <div class="ts-lb-header">
+                <button class="btn-secondary" onclick="backFromLeaderboard()">← Back</button>
+                <h2 id="lbTitle">🏆 Leaderboard</h2>
+            </div>
+            <div id="leaderboardContent"></div>
+        </div>
+    </main>
+</div>
+
+<script src="scripts/test-series.js"></script>
+</body>
+</html>

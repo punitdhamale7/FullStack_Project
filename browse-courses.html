@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Courses - LearnAI</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/courses.css">
+    <link rel="stylesheet" href="styles/icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="scripts/config.js"></script><script src="scripts/api.js"></script></head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2><a href="index.html" style="color: inherit; text-decoration: none;">LearnAI</a></h2>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-purple"><i data-lucide="layout-dashboard"></i></span></span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="my-courses.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-blue"><i data-lucide="book-open"></i></span></span>
+                    <span>My Courses</span>
+                </a>
+                <a href="browse-courses.html" class="nav-item active">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-indigo"><i data-lucide="search"></i></span></span>
+                    <span>Browse Courses</span>
+                </a>
+                <a href="progress.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-blue"><i data-lucide="bar-chart-3"></i></span></span>
+                    <span>Progress</span>
+                </a>
+                <a href="achievements.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-orange"><i data-lucide="trophy"></i></span></span>
+                    <span>Achievements</span>
+                </a>
+                <a href="test-series.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-purple"><i data-lucide="clipboard-list"></i></span></span>
+                    <span>Test Series</span>
+                </a>
+                <a href="messages.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-indigo"><i data-lucide="message-square"></i></span></span>
+                    <span>Messages</span>
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-green"><i data-lucide="user"></i></span></span>
+                    <span>My Profile</span>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-orange"><i data-lucide="settings"></i></span></span>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="nav-item" onclick="logout()">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-red"><i data-lucide="log-out"></i></span></span>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="topbar">
+                <h1><span class="icon-3d-wrapper icon-sm icon-indigo" style="display: inline-flex; vertical-align: middle; margin-right: 12px;"><i data-lucide="search"></i></span> Browse Courses</h1>
+                <div class="user-section">
+                    <button class="notification-btn"><i data-lucide="bell"></i><span class="badge">3</span></button>
+                    <div class="user-profile" onclick="toggleUserMenu()">
+                        <img src="assets/default-avatar.png" alt="User" id="topbarAvatar">
+                        <span id="userName">User</span>
+                    </div>
+                    
+                    <!-- User Dropdown Menu -->
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <img src="assets/default-avatar.png" alt="User" id="dropdownAvatar">
+                            <div class="dropdown-user-info">
+                                <h4 id="dropdownName">User</h4>
+                                <p id="dropdownEmail">user@example.com</p>
+                            </div>
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.html"><span class="icon-3d-wrapper icon-sm icon-blue" style="margin-right: 10px;"><i data-lucide="home"></i></span> Home</a></li>
+                            <li><a href="dashboard.html"><span class="icon-3d-wrapper icon-sm icon-purple" style="margin-right: 10px;"><i data-lucide="layout-dashboard"></i></span> Dashboard</a></li>
+                            <li><a href="profile.html"><span class="icon-3d-wrapper icon-sm icon-green" style="margin-right: 10px;"><i data-lucide="user"></i></span> My Profile</a></li>
+                            <li><a href="settings.html"><span class="icon-3d-wrapper icon-sm icon-orange" style="margin-right: 10px;"><i data-lucide="settings"></i></span> Settings</a></li>
+                            <li class="dropdown-divider"></li>
+                            <li><a href="#" onclick="logout(); return false;"><span class="icon-3d-wrapper icon-sm icon-red" style="margin-right: 10px;"><i data-lucide="log-out"></i></span> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <!-- Search and Filter -->
+                <div class="browse-header">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search for courses..." id="searchInput">
+                        <button class="search-btn"><i data-lucide="search"></i></button>
+                    </div>
+                    <div class="filter-options">
+                        <select id="categoryFilter">
+                            <option value="all">All Categories</option>
+                            <option value="web">Web Development</option>
+                            <option value="data">Data Science</option>
+                            <option value="ai">AI & ML</option>
+                            <option value="mobile">Mobile Development</option>
+                        </select>
+                        <select id="levelFilter">
+                            <option value="all">All Levels</option>
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Courses Grid -->
+                <div class="courses-grid" id="coursesGrid">
+                    <!-- Courses will be loaded here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Enrollment Modal -->
+    <div class="enrollment-modal" id="enrollModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Confirm Enrollment</h2>
+                <button class="modal-close" onclick="closeEnrollModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <span class="icon-3d-wrapper icon-xl icon-blue"><i data-lucide="book-open"></i></span>
+                </div>
+                <p>You are about to enroll in:</p>
+                <h3 id="modalCourseTitle">Course Title</h3>
+                <div class="modal-price">
+                    <span>Price:</span>
+                    <span id="modalCoursePrice">$0.00</span>
+                </div>
+                <p class="modal-note">You will get lifetime access to this course.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-cancel-btn" onclick="closeEnrollModal()">Cancel</button>
+                <button class="modal-confirm-btn" onclick="confirmEnrollment()">Confirm Enrollment</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/user-dropdown.js"></script>
+    <script src="scripts/browse-courses.js"></script>
+    
+    <!-- AI Chatbot Widget -->
+    <link rel="stylesheet" href="styles/chatbot.css">
+    <script src="scripts/chatbot.js"></script>
+</body>
+</html>

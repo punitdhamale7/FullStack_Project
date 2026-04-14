@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress - LearnAI</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/progress.css">
+    <link rel="stylesheet" href="styles/icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="scripts/config.js"></script><script src="scripts/api.js"></script></head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2><a href="index.html" style="color: inherit; text-decoration: none;">LearnAI</a></h2>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-purple"><i data-lucide="layout-dashboard"></i></span></span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="my-courses.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-blue"><i data-lucide="book-open"></i></span></span>
+                    <span>My Courses</span>
+                </a>
+                <a href="browse-courses.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-indigo"><i data-lucide="search"></i></span></span>
+                    <span>Browse Courses</span>
+                </a>
+                <a href="progress.html" class="nav-item active">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-blue"><i data-lucide="bar-chart-3"></i></span></span>
+                    <span>Progress</span>
+                </a>
+                <a href="achievements.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-orange"><i data-lucide="trophy"></i></span></span>
+                    <span>Achievements</span>
+                </a>
+                <a href="test-series.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-purple"><i data-lucide="clipboard-list"></i></span></span>
+                    <span>Test Series</span>
+                </a>
+                <a href="messages.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-indigo"><i data-lucide="message-square"></i></span></span>
+                    <span>Messages</span>
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-green"><i data-lucide="user"></i></span></span>
+                    <span>My Profile</span>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-orange"><i data-lucide="settings"></i></span></span>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="nav-item" onclick="logout()">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-red"><i data-lucide="log-out"></i></span></span>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="topbar">
+                <h1><span class="icon-3d-wrapper icon-sm icon-blue" style="display: inline-flex; vertical-align: middle; margin-right: 12px;"><i data-lucide="bar-chart-3"></i></span> My Progress</h1>
+                <div class="user-section">
+                    <button class="notification-btn"><i data-lucide="bell"></i><span class="badge">3</span></button>
+                    <div class="user-profile" onclick="toggleUserMenu()">
+                        <img src="assets/default-avatar.png" alt="User" id="topbarAvatar">
+                        <span id="userName">User</span>
+                    </div>
+                    
+                    <!-- User Dropdown Menu -->
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <img src="assets/default-avatar.png" alt="User" id="dropdownAvatar">
+                            <div class="dropdown-user-info">
+                                <h4 id="dropdownName">User</h4>
+                                <p id="dropdownEmail">user@example.com</p>
+                            </div>
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.html"><span class="icon-3d-wrapper icon-sm icon-blue" style="margin-right: 10px;"><i data-lucide="home"></i></span> Home</a></li>
+                            <li><a href="dashboard.html"><span class="icon-3d-wrapper icon-sm icon-purple" style="margin-right: 10px;"><i data-lucide="layout-dashboard"></i></span> Dashboard</a></li>
+                            <li><a href="profile.html"><span class="icon-3d-wrapper icon-sm icon-green" style="margin-right: 10px;"><i data-lucide="user"></i></span> My Profile</a></li>
+                            <li><a href="settings.html"><span class="icon-3d-wrapper icon-sm icon-orange" style="margin-right: 10px;"><i data-lucide="settings"></i></span> Settings</a></li>
+                            <li class="dropdown-divider"></li>
+                            <li><a href="#" onclick="logout(); return false;"><span class="icon-3d-wrapper icon-sm icon-red" style="margin-right: 10px;"><i data-lucide="log-out"></i></span> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <!-- Stats Overview -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><span class="icon-3d-wrapper icon-lg icon-blue"><i data-lucide="book-open"></i></span></div>
+                        <div class="stat-info">
+                            <h3 id="totalCourses">5</h3>
+                            <p>Total Courses</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><span class="icon-3d-wrapper icon-lg icon-green"><i data-lucide="check-circle-2"></i></span></div>
+                        <div class="stat-info">
+                            <h3 id="completedCourses">12</h3>
+                            <p>Completed Lessons</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><span class="icon-3d-wrapper icon-lg icon-indigo"><i data-lucide="clock"></i></span></div>
+                        <div class="stat-info">
+                            <h3 id="totalHours">48</h3>
+                            <p>Hours Learned</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><span class="icon-3d-wrapper icon-lg icon-red"><i data-lucide="flame"></i></span></div>
+                        <div class="stat-info">
+                            <h3 id="streak">15</h3>
+                            <p>Day Streak</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Progress -->
+                <div class="progress-section">
+                    <h2><i data-lucide="layers" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px;"></i> Course Progress</h2>
+                    <div class="progress-list" id="progressList">
+                        <!-- Progress items will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Learning Activity -->
+                <div class="activity-section">
+                    <h2><i data-lucide="activity" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px;"></i> Learning Activity</h2>
+                    <div class="activity-chart">
+                        <canvas id="activityChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="scripts/user-dropdown.js"></script>
+    <script src="scripts/progress.js"></script>
+    
+    <!-- AI Chatbot Widget -->
+    <link rel="stylesheet" href="styles/chatbot.css">
+    <script src="scripts/chatbot.js"></script>
+</body>
+</html>

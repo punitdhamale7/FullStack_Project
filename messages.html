@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - LearnAI</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/messages.css">
+    <link rel="stylesheet" href="styles/icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="scripts/config.js"></script><script src="scripts/api.js"></script></head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2><a href="index.html" style="color: inherit; text-decoration: none;">LearnAI</a></h2>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-purple"><i data-lucide="layout-dashboard"></i></span></span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="my-courses.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-blue"><i data-lucide="book-open"></i></span></span>
+                    <span>My Courses</span>
+                </a>
+                <a href="browse-courses.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-indigo"><i data-lucide="search"></i></span></span>
+                    <span>Browse Courses</span>
+                </a>
+                <a href="progress.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-blue"><i data-lucide="bar-chart-3"></i></span></span>
+                    <span>Progress</span>
+                </a>
+                <a href="achievements.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-orange"><i data-lucide="trophy"></i></span></span>
+                    <span>Achievements</span>
+                </a>
+                <a href="test-series.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-purple"><i data-lucide="clipboard-list"></i></span></span>
+                    <span>Test Series</span>
+                </a>
+                <a href="messages.html" class="nav-item active">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-indigo"><i data-lucide="message-square"></i></span></span>
+                    <span>Messages</span>
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-green"><i data-lucide="user"></i></span></span>
+                    <span>My Profile</span>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-orange"><i data-lucide="settings"></i></span></span>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="nav-item" onclick="logout()">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-red"><i data-lucide="log-out"></i></span></span>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="topbar">
+                <h1><span class="icon-3d-wrapper icon-sm icon-indigo" style="display: inline-flex; vertical-align: middle; margin-right: 12px;"><i data-lucide="message-square"></i></span> Messages</h1>
+                <div class="user-section">
+                    <button class="notification-btn"><i data-lucide="bell"></i><span class="badge">3</span></button>
+                    <div class="user-profile" onclick="toggleUserMenu()">
+                        <img src="assets/default-avatar.png" alt="User" id="topbarAvatar">
+                        <span id="userName">User</span>
+                    </div>
+                    
+                    <!-- User Dropdown Menu -->
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <img src="assets/default-avatar.png" alt="User" id="dropdownAvatar">
+                            <div class="dropdown-user-info">
+                                <h4 id="dropdownName">User</h4>
+                                <p id="dropdownEmail">user@example.com</p>
+                            </div>
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.html"><span class="icon-3d-wrapper icon-sm icon-blue" style="margin-right: 10px;"><i data-lucide="home"></i></span> Home</a></li>
+                            <li><a href="dashboard.html"><span class="icon-3d-wrapper icon-sm icon-purple" style="margin-right: 10px;"><i data-lucide="layout-dashboard"></i></span> Dashboard</a></li>
+                            <li><a href="profile.html"><span class="icon-3d-wrapper icon-sm icon-green" style="margin-right: 10px;"><i data-lucide="user"></i></span> My Profile</a></li>
+                            <li><a href="settings.html"><span class="icon-3d-wrapper icon-sm icon-orange" style="margin-right: 10px;"><i data-lucide="settings"></i></span> Settings</a></li>
+                            <li class="dropdown-divider"></li>
+                            <li><a href="#" onclick="logout(); return false;"><span class="icon-3d-wrapper icon-sm icon-red" style="margin-right: 10px;"><i data-lucide="log-out"></i></span> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <div class="messages-container">
+                <!-- Conversations List -->
+                <div class="conversations-panel">
+                    <div class="conversations-header">
+                        <h2>Chats</h2>
+                        <button class="new-message-btn" onclick="showNewMessageModal()">
+                            <i data-lucide="plus-circle" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 4px;"></i> New
+                        </button>
+                    </div>
+                    
+                    <div class="search-conversations">
+                        <div class="search-wrapper" style="position: relative;">
+                            <i data-lucide="search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: #667781;"></i>
+                            <input type="text" placeholder="Search or start new chat" id="searchConversations" oninput="searchConversations(this.value)" style="padding-left: 40px; width: 100%; height: 40px; border: none; border-radius: 8px; background: #f0f2f5;">
+                        </div>
+                    </div>
+                    
+                    <div class="conversations-list" id="conversationsList">
+                        <div style="text-align: center; padding: 40px; color: #667781;">
+                            <i data-lucide="loader-2" class="spin" style="width: 30px; height: 30px; margin-bottom: 15px;"></i>
+                            <br>Loading conversations...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Area -->
+                <div class="chat-panel">
+                    <!-- No Conversation Selected -->
+                    <div class="no-conversation" id="noConversation" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #667781; background: #f0f2f5;">
+                        <div class="icon-3d-wrapper icon-xl icon-indigo" style="margin-bottom: 30px; transform: scale(3);">
+                            <i data-lucide="message-square"></i>
+                        </div>
+                        <h3 style="color: #111b21; margin-bottom: 10px; font-size: 24px;">Instant Messaging</h3>
+                        <p style="margin-top: 10px; color: #667781; font-size: 16px;">Connect with instructors and peers instantly</p>
+                        <button onclick="showNewMessageModal()" class="btn-primary" style="margin-top: 30px; padding: 12px 30px; border-radius: 30px;">
+                            Start New Chat
+                        </button>
+                    </div>
+                    
+                    <!-- Chat Area (hidden by default) -->
+                    <div class="chat-area" id="chatArea" style="display: none; flex-direction: column; height: 100%;">
+                        <div class="chat-header" id="chatHeader">
+                            <div class="chat-user-info">
+                                <img src="assets/default-avatar.png" alt="User" id="chatUserAvatar">
+                                <div>
+                                    <h3 id="chatUserName">User Name</h3>
+                                    <span class="status" id="chatUserStatus">online</span>
+                                </div>
+                            </div>
+                            <div class="chat-actions">
+                                <button class="icon-btn" title="Search"><i data-lucide="search"></i></button>
+                                <button class="icon-btn" title="More"><i data-lucide="more-vertical"></i></button>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-messages" id="messagesContainer">
+                            <!-- Messages will be loaded here -->
+                        </div>
+                        
+                        <div class="chat-input-area">
+                            <div class="input-wrapper">
+                                <button class="emoji-btn" title="Emoji"><i data-lucide="smile"></i></button>
+                                <input type="text" placeholder="Type a message" id="messageInput">
+                                <button class="attach-btn" title="Attach"><i data-lucide="paperclip"></i></button>
+                            </div>
+                            <button class="send-btn" onclick="sendMessage()" title="Send">
+                                <i data-lucide="send"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="scripts/user-dropdown.js"></script>
+    <script src="scripts/messages.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        });
+    </script>
+    
+    <!-- AI Chatbot Widget -->
+    <link rel="stylesheet" href="styles/chatbot.css">
+    <script src="scripts/chatbot.js"></script>
+</body>
+</html>

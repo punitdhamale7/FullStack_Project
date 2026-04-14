@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - LearnAI</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/profile.css">
+    <link rel="stylesheet" href="styles/icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="scripts/config.js"></script><script src="scripts/api.js"></script></head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <h2 class="logo">LearnAI</h2>
+            </a>
+            <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-purple"><i data-lucide="layout-dashboard"></i></span></span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="my-courses.html" class="nav-item">
+                <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-blue"><i data-lucide="book-open"></i></span></span>
+                <span class="nav-text">My Courses</span>
+            </a>
+            <a href="browse-courses.html" class="nav-item">
+                <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-indigo"><i data-lucide="search"></i></span></span>
+                <span class="nav-text">Browse Courses</span>
+            </a>
+            <a href="progress.html" class="nav-item">
+                <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-blue"><i data-lucide="bar-chart-3"></i></span></span>
+                <span class="nav-text">Progress</span>
+            </a>
+            <a href="achievements.html" class="nav-item">
+                <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-orange"><i data-lucide="trophy"></i></span></span>
+                <span class="nav-text">Achievements</span>
+            </a>
+            <a href="test-series.html" class="nav-item">
+                <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-purple"><i data-lucide="clipboard-list"></i></span></span>
+                <span class="nav-text">Test Series</span>
+            </a>
+            <a href="messages.html" class="nav-item">
+                <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-indigo"><i data-lucide="message-square"></i></span></span>
+                <span class="nav-text">Messages</span>
+            </a>
+            <a href="profile.html" class="nav-item active">
+                <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-green"><i data-lucide="user"></i></span></span>
+                <span class="nav-text">My Profile</span>
+            </a>
+            <a href="settings.html" class="nav-item">
+                <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-orange"><i data-lucide="settings"></i></span></span>
+                <span class="nav-text">Settings</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="#" class="nav-item" onclick="logout(); return false;">
+                <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-red"><i data-lucide="log-out"></i></span></span>
+                <span class="nav-text">Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+                <h1 class="page-title">My Profile</h1>
+            </div>
+            
+            <div class="topbar-right">
+                <button class="notification-btn">
+                    <i data-lucide="bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+                <div class="user-profile" onclick="toggleUserMenu()">
+                    <img src="assets/default-avatar.png" alt="User" id="topbarAvatar">
+                    <span class="user-name" id="topbarUserName">John Doe</span>
+                </div>
+                
+                <!-- User Dropdown Menu -->
+                <div class="user-dropdown" id="userDropdown">
+                    <div class="dropdown-header">
+                        <img src="assets/default-avatar.png" alt="User" id="dropdownAvatar">
+                        <div class="dropdown-user-info">
+                            <h4 id="dropdownName">User</h4>
+                            <p id="dropdownEmail">user@example.com</p>
+                        </div>
+                    </div>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html"><span class="icon-3d-wrapper icon-sm icon-blue" style="margin-right: 10px;"><i data-lucide="home"></i></span> Home</a></li>
+                        <li><a href="dashboard.html"><span class="icon-3d-wrapper icon-sm icon-purple" style="margin-right: 10px;"><i data-lucide="layout-dashboard"></i></span> Dashboard</a></li>
+                        <li><a href="profile.html"><span class="icon-3d-wrapper icon-sm icon-green" style="margin-right: 10px;"><i data-lucide="user"></i></span> My Profile</a></li>
+                        <li><a href="settings.html"><span class="icon-3d-wrapper icon-sm icon-orange" style="margin-right: 10px;"><i data-lucide="settings"></i></span> Settings</a></li>
+                        <li class="dropdown-divider"></li>
+                        <li><a href="#" onclick="logout(); return false;"><span class="icon-3d-wrapper icon-sm icon-red" style="margin-right: 10px;"><i data-lucide="log-out"></i></span> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <!-- Profile Content -->
+        <main class="profile-container">
+            <!-- Profile Header Card -->
+            <div class="profile-header-card">
+                <div class="profile-cover">
+                    <img id="profileCoverImg" src="" alt="Cover" style="display:none;width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
+                    <button class="edit-cover-btn" onclick="editCover()">
+                        <i data-lucide="camera" style="margin-right: 5px;"></i> Change Cover
+                    </button>
+                    <input type="file" id="coverInput" accept="image/*" style="display:none;" onchange="handleCoverChange(event)">
+                </div>
+                
+                <div class="profile-main-info">
+                    <div class="profile-avatar-section">
+                        <div class="profile-avatar-wrapper">
+                            <img src="assets/default-avatar.png" alt="Profile" id="profileAvatar">
+                            <button class="change-avatar-btn" onclick="changeAvatar()">
+                                <i data-lucide="camera"></i>
+                            </button>
+                        </div>
+                        <input type="file" id="avatarInput" accept="image/*" style="display: none;" onchange="handleAvatarChange(event)">
+                        <p class="avatar-requirements" id="avatarRequirements">
+                            <small>JPG, PNG or GIF • Any size<br>Auto-resized to 800x800px</small>
+                        </p>
+                    </div>
+                    
+                    <div class="profile-info">
+                        <h1 id="profileName">John Doe</h1>
+                        <p class="profile-username">@johndoe</p>
+                        <p class="profile-email">john@example.com</p>
+                        <div class="profile-stats">
+                            <div class="stat">
+                                <strong>5</strong>
+                                <span>Courses</span>
+                            </div>
+                            <div class="stat">
+                                <strong>12</strong>
+                                <span>Completed</span>
+                            </div>
+                            <div class="stat">
+                                <strong>8</strong>
+                                <span>Certificates</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-actions">
+                        <button class="btn-primary" onclick="toggleEditMode()">
+                            <i data-lucide="edit-3" style="margin-right: 5px;"></i> Edit Profile
+                        </button>
+                        <button class="btn-secondary" onclick="shareProfile()">
+                            <i data-lucide="share-2" style="margin-right: 5px;"></i> Share Profile
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Content Grid -->
+            <div class="profile-content-grid">
+                <!-- Left Column -->
+                <div class="profile-left-column">
+                    <!-- Personal Information -->
+                    <div class="profile-card">
+                        <div class="card-header">
+                            <h2>Personal Information</h2>
+                            <button class="icon-btn" onclick="editPersonalInfo()"><i data-lucide="edit-3"></i></button>
+                        </div>
+                        
+                        <div class="info-list" id="personalInfoView">
+                            <div class="info-item">
+                                <span class="info-label">Full Name</span>
+                                <span class="info-value" id="displayFullName">John Doe</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Email</span>
+                                <span class="info-value" id="displayEmail">john@example.com</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Phone</span>
+                                <span class="info-value" id="displayPhone">+1 234 567 8900</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Date of Birth</span>
+                                <span class="info-value" id="displayDOB">Not set</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Gender</span>
+                                <span class="info-value" id="displayGender">Not set</span>
+                            </div>
+                        </div>
+                        
+                        <form class="info-form" id="personalInfoForm" style="display: none;">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" id="editFullName" placeholder="Enter your full name">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" id="editPhone" placeholder="+1 234 567 8900">
+                            </div>
+                            <div class="form-group">
+                                <label>Date of Birth</label>
+                                <input type="date" id="editDOB">
+                            </div>
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <select id="editGender">
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                    <option value="Prefer not to say">Prefer not to say</option>
+                                </select>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn-save" onclick="savePersonalInfo()">Save</button>
+                                <button type="button" class="btn-cancel" onclick="cancelEdit('personalInfo')">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Education Information -->
+                    <div class="profile-card">
+                        <div class="card-header">
+                            <h2>Education</h2>
+                            <button class="icon-btn" onclick="editEducation()"><i data-lucide="edit-3"></i></button>
+                        </div>
+                        
+                        <div class="info-list" id="educationView">
+                            <div class="info-item">
+                                <span class="info-label">College/University</span>
+                                <span class="info-value" id="displayCollege">Not set</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Degree</span>
+                                <span class="info-value" id="displayDegree">Not set</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Branch/Major</span>
+                                <span class="info-value" id="displayBranch">Not set</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Specialization</span>
+                                <span class="info-value" id="displaySpecialization">Not set</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Year of Study</span>
+                                <span class="info-value" id="displayYear">Not set</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Graduation Year</span>
+                                <span class="info-value" id="displayGradYear">Not set</span>
+                            </div>
+                        </div>
+                        
+                        <form class="info-form" id="educationForm" style="display: none;">
+                            <div class="form-group">
+                                <label>College/University</label>
+                                <input type="text" id="editCollege" placeholder="Enter your college name">
+                            </div>
+                            <div class="form-group">
+                                <label>Degree</label>
+                                <select id="editDegree">
+                                    <option value="">Select Degree</option>
+                                    <option value="Bachelor's">Bachelor's</option>
+                                    <option value="Master's">Master's</option>
+                                    <option value="PhD">PhD</option>
+                                    <option value="Diploma">Diploma</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Branch/Major</label>
+                                <input type="text" id="editBranch" placeholder="e.g., Computer Science">
+                            </div>
+                            <div class="form-group">
+                                <label>Specialization</label>
+                                <input type="text" id="editSpecialization" placeholder="e.g., AI & Machine Learning">
+                            </div>
+                            <div class="form-group">
+                                <label>Year of Study</label>
+                                <select id="editYear">
+                                    <option value="">Select Year</option>
+                                    <option value="1st Year">1st Year</option>
+                                    <option value="2nd Year">2nd Year</option>
+                                    <option value="3rd Year">3rd Year</option>
+                                    <option value="4th Year">4th Year</option>
+                                    <option value="Final Year">Final Year</option>
+                                    <option value="Graduated">Graduated</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Graduation Year</label>
+                                <input type="number" id="editGradYear" placeholder="2024" min="2000" max="2050">
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn-save" onclick="saveEducation()">Save</button>
+                                <button type="button" class="btn-cancel" onclick="cancelEdit('education')">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Bio/About -->
+                    <div class="profile-card">
+                        <div class="card-header">
+                            <h2>About Me</h2>
+                            <button class="icon-btn" onclick="editBio()"><i data-lucide="edit-3"></i></button>
+                        </div>
+                        
+                        <div id="bioView">
+                            <p class="bio-text" id="displayBio">Write something about yourself...</p>
+                        </div>
+                        
+                        <form class="info-form" id="bioForm" style="display: none;">
+                            <div class="form-group">
+                                <label>Bio</label>
+                                <textarea id="editBioText" rows="5" placeholder="Tell us about yourself, your interests, goals..."></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn-save" onclick="saveBio()">Save</button>
+                                <button type="button" class="btn-cancel" onclick="cancelEdit('bio')">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="profile-right-column">
+                    <!-- Skills & Interests -->
+                    <div class="profile-card">
+                        <div class="card-header">
+                            <h2>Skills & Interests</h2>
+                            <button class="icon-btn" onclick="addSkill()"><i data-lucide="plus"></i></button>
+                        </div>
+                        
+                        <div class="skills-container" id="skillsContainer">
+                            <span class="skill-tag">JavaScript <button onclick="removeSkill(this)">×</button></span>
+                            <span class="skill-tag">Python <button onclick="removeSkill(this)">×</button></span>
+                            <span class="skill-tag">React <button onclick="removeSkill(this)">×</button></span>
+                        </div>
+                        
+                        <div class="add-skill-form" id="addSkillForm" style="display: none;">
+                            <input type="text" id="newSkill" placeholder="Enter skill name">
+                            <button class="btn-save" onclick="saveSkill()">Add</button>
+                            <button class="btn-cancel" onclick="cancelAddSkill()">Cancel</button>
+                        </div>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="profile-card">
+                        <div class="card-header">
+                            <h2>Social Links</h2>
+                            <button class="icon-btn" onclick="editSocial()"><i data-lucide="edit-3"></i></button>
+                        </div>
+                        
+                        <div class="social-links" id="socialView">
+                            <div class="social-item">
+                                <span class="social-icon"><i data-lucide="linkedin"></i></span>
+                                <span id="displayLinkedIn">Not set</span>
+                            </div>
+                            <div class="social-item">
+                                <span class="social-icon"><i data-lucide="github"></i></span>
+                                <span id="displayGithub">Not set</span>
+                            </div>
+                            <div class="social-item">
+                                <span class="social-icon"><i data-lucide="twitter"></i></span>
+                                <span id="displayTwitter">Not set</span>
+                            </div>
+                            <div class="social-item">
+                                <span class="social-icon"><i data-lucide="globe"></i></span>
+                                <span id="displayWebsite">Not set</span>
+                            </div>
+                        </div>
+                        
+                        <form class="info-form" id="socialForm" style="display: none;">
+                            <div class="form-group">
+                                <label>LinkedIn</label>
+                                <input type="url" id="editLinkedIn" placeholder="https://linkedin.com/in/username">
+                            </div>
+                            <div class="form-group">
+                                <label>GitHub</label>
+                                <input type="url" id="editGithub" placeholder="https://github.com/username">
+                            </div>
+                            <div class="form-group">
+                                <label>Twitter</label>
+                                <input type="url" id="editTwitter" placeholder="https://twitter.com/username">
+                            </div>
+                            <div class="form-group">
+                                <label>Website</label>
+                                <input type="url" id="editWebsite" placeholder="https://yourwebsite.com">
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn-save" onclick="saveSocial()">Save</button>
+                                <button type="button" class="btn-cancel" onclick="cancelEdit('social')">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Account Settings -->
+                    <div class="profile-card">
+                        <div class="card-header">
+                            <h2>Account Settings</h2>
+                        </div>
+                        
+                        <div class="settings-list">
+                            <button class="setting-btn" onclick="changePassword()">
+                                <span><i data-lucide="lock" style="margin-right: 8px;"></i> Change Password</span>
+                                <span>→</span>
+                            </button>
+                            <button class="setting-btn" onclick="changeEmail()">
+                                <span><i data-lucide="mail" style="margin-right: 8px;"></i> Change Email</span>
+                                <span>→</span>
+                            </button>
+                            <button class="setting-btn" onclick="privacySettings()">
+                                <span><i data-lucide="shield" style="margin-right: 8px;"></i> Privacy Settings</span>
+                                <span>→</span>
+                            </button>
+                            <button class="setting-btn" onclick="notificationSettings()">
+                                <span><i data-lucide="bell" style="margin-right: 8px;"></i> Notification Settings</span>
+                                <span>→</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Danger Zone -->
+                    <div class="profile-card danger-zone">
+                        <div class="card-header">
+                            <h2>Danger Zone</h2>
+                        </div>
+                        
+                        <div class="danger-content">
+                            <p>Once you delete your account, there is no going back. Please be certain.</p>
+                            <button class="btn-danger" onclick="deleteAccount()">
+                                <i data-lucide="trash-2" style="width:16px;height:16px;margin-right:8px;vertical-align:middle;"></i> Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="scripts/dashboard.js"></script>
+    <script src="scripts/user-dropdown.js"></script>
+    <script src="scripts/profile.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+    </script>
+    
+    <!-- AI Chatbot Widget -->
+    <link rel="stylesheet" href="styles/chatbot.css">
+    <script src="scripts/chatbot.js"></script>
+</body>
+</html>

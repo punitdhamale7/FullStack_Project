@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Recommendations - LearnAI</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/icons.css">
+    <link rel="stylesheet" href="styles/recommendations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="scripts/config.js"></script>
+    <script src="scripts/api.js"></script>
+</head>
+<body>
+<div class="rec-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2><span class="icon-3d-wrapper icon-sm icon-indigo" style="margin-right:8px;"><i data-lucide="graduation-cap"></i></span>LearnAI</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item"><span class="nav-icon"><span class="icon-3d-wrapper icon-xs icon-purple"><i data-lucide="layout-dashboard"></i></span></span><span class="nav-text">Dashboard</span></a>
+            <a href="my-courses.html" class="nav-item"><span class="nav-icon"><span class="icon-3d-wrapper icon-xs icon-blue"><i data-lucide="book-open"></i></span></span><span class="nav-text">My Courses</span></a>
+            <a href="browse-courses.html" class="nav-item"><span class="nav-icon"><span class="icon-3d-wrapper icon-xs icon-indigo"><i data-lucide="search"></i></span></span><span class="nav-text">Browse Courses</span></a>
+            <a href="recommendations.html" class="nav-item active"><span class="nav-icon"><span class="icon-3d-wrapper icon-xs icon-purple"><i data-lucide="bot"></i></span></span><span class="nav-text">AI Recommendations</span></a>
+            <a href="progress.html" class="nav-item"><span class="nav-icon"><span class="icon-3d-wrapper icon-xs icon-blue"><i data-lucide="bar-chart-3"></i></span></span><span class="nav-text">Progress</span></a>
+            <a href="achievements.html" class="nav-item"><span class="nav-icon"><span class="icon-3d-wrapper icon-xs icon-orange"><i data-lucide="trophy"></i></span></span><span class="nav-text">Achievements</span></a>
+            <a href="test-series.html" class="nav-item"><span class="nav-icon"><span class="icon-3d-wrapper icon-xs icon-purple"><i data-lucide="clipboard-list"></i></span></span><span class="nav-text">Test Series</span></a>
+            <a href="messages.html" class="nav-item"><span class="nav-icon"><span class="icon-3d-wrapper icon-xs icon-indigo"><i data-lucide="message-square"></i></span></span><span class="nav-text">Messages</span></a>
+            <a href="profile.html" class="nav-item"><span class="nav-icon"><span class="icon-3d-wrapper icon-xs icon-green"><i data-lucide="user"></i></span></span><span class="nav-text">Profile</span></a>
+            <a href="settings.html" class="nav-item"><span class="nav-icon"><span class="icon-3d-wrapper icon-xs icon-orange"><i data-lucide="settings"></i></span></span><span class="nav-text">Settings</span></a>
+            <div class="nav-divider"></div>
+            <a href="#" class="nav-item" onclick="logout()"><span class="nav-icon"><span class="icon-3d-wrapper icon-xs icon-red"><i data-lucide="log-out"></i></span></span><span class="nav-text">Logout</span></a>
+        </nav>
+    </aside>
+
+    <!-- Main -->
+    <div class="rec-main">
+
+        <!-- Topbar -->
+        <header class="rec-topbar">
+            <div class="rec-topbar-left">
+                <button style="background:none;border:none;cursor:pointer;padding:6px;border-radius:8px;" onclick="document.getElementById('sidebar').classList.toggle('collapsed')">
+                    <i data-lucide="menu" style="width:20px;height:20px;color:#6b7280;"></i>
+                </button>
+                <h1><span class="icon-3d-wrapper icon-xs icon-purple" style="margin-right:8px;"><i data-lucide="bot"></i></span> AI Recommendations</h1>
+            </div>
+            <div class="rec-topbar-right">
+                <button class="notification-btn"><i data-lucide="bell" style="width:20px;height:20px;"></i><span class="notification-badge">3</span></button>
+                <div class="rec-user-profile" onclick="this.nextElementSibling.classList.toggle('show')" style="position:relative;">
+                    <img src="assets/default-avatar.png" alt="User" id="topbarAvatar">
+                    <span id="userName">User</span>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <img src="assets/default-avatar.png" id="dropdownAvatar">
+                            <div class="dropdown-user-info">
+                                <h4 id="dropdownName">User</h4>
+                                <p id="dropdownEmail">user@example.com</p>
+                            </div>
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="dashboard.html"><span class="icon-3d-wrapper icon-sm icon-purple" style="margin-right:8px;"><i data-lucide="layout-dashboard"></i></span>Dashboard</a></li>
+                            <li><a href="profile.html"><span class="icon-3d-wrapper icon-sm icon-green" style="margin-right:8px;"><i data-lucide="user"></i></span>My Profile</a></li>
+                            <li><a href="settings.html"><span class="icon-3d-wrapper icon-sm icon-orange" style="margin-right:8px;"><i data-lucide="settings"></i></span>Settings</a></li>
+                            <li class="dropdown-divider"></li>
+                            <li><a href="#" onclick="logout()"><span class="icon-3d-wrapper icon-sm icon-red" style="margin-right:8px;"><i data-lucide="log-out"></i></span>Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <div class="rec-content">
+
+            <!-- AI Banner -->
+            <div class="ai-banner">
+                <div class="ai-banner-content">
+                    <h2><i data-lucide="brain" style="width:22px;height:22px;"></i> Personalized Learning Path</h2>
+                    <p>Our AI analyzes your learning history, course completions, and patterns from similar learners to recommend the perfect courses for you.</p>
+                </div>
+                <div class="ai-stats">
+                    <div class="ai-stat">
+                        <span class="stat-number" id="totalRecs">—</span>
+                        <span class="stat-label">Recommendations</span>
+                    </div>
+                    <div class="ai-stat">
+                        <span class="stat-number" id="matchScore">—</span>
+                        <span class="stat-label">Avg Match</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters-section">
+                <div class="filter-group">
+                    <label>Sort by:</label>
+                    <select id="sortFilter" onchange="applySorting()">
+                        <option value="score">Recommendation Score</option>
+                        <option value="rating">Highest Rated</option>
+                        <option value="popular">Most Popular</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Difficulty:</label>
+                    <select id="difficultyFilter" onchange="applyFilters()">
+                        <option value="all">All Levels</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Grid -->
+            <div class="rec-grid" id="recommendationsGrid">
+                <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#9ca3af;">
+                    <div style="margin-bottom:16px;"><span class="icon-3d-wrapper icon-xl icon-purple"><i data-lucide="bot"></i></span></div>
+                    <h3 style="color:#374151;margin:0 0 8px;">Loading AI Recommendations…</h3>
+                    <p style="margin:0;font-size:14px;">Analyzing your learning patterns</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="scripts/user-dropdown.js"></script>
+<script>
+let allRecommendations = [];
+
+document.addEventListener('DOMContentLoaded', function() {
+    const session = JSON.parse(localStorage.getItem('session'));
+    if (!session || !session.loggedIn) { window.location.replace('login.html'); return; }
+
+    const user = session.user;
+    document.getElementById('userName').textContent = user.fullName || user.username || 'User';
+    document.getElementById('dropdownName').textContent = user.fullName || user.username || 'User';
+    document.getElementById('dropdownEmail').textContent = user.email || '';
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://localhost:3001/api/profile/' + user.id);
+    xhr.onload = function() {
+        try {
+            var d = JSON.parse(xhr.responseText);
+            if (d.success && d.profile.avatar_url) {
+                document.getElementById('topbarAvatar').src = d.profile.avatar_url;
+                document.getElementById('dropdownAvatar').src = d.profile.avatar_url;
+            }
+        } catch(e) {}
+    };
+    xhr.send();
+
+    loadRecommendations(user.id);
+    if (window.lucide) lucide.createIcons();
+});
+
+function loadRecommendations(userId) {
+    var grid = document.getElementById('recommendationsGrid');
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://localhost:3001/api/recommendations/' + userId);
+    xhr.onload = function() {
+        try {
+            var data = JSON.parse(xhr.responseText);
+            if (data.success && data.recommendations.length > 0) {
+                allRecommendations = data.recommendations;
+                document.getElementById('totalRecs').textContent = data.recommendations.length;
+                var avg = data.recommendations.reduce(function(s,r){return s+r.recommendation_score;},0) / data.recommendations.length;
+                document.getElementById('matchScore').textContent = Math.round(avg * 10) + '%';
+                displayRecommendations(allRecommendations);
+            } else {
+                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#9ca3af;">'
+                    + '<div style="margin-bottom:16px;"><span class="icon-3d-wrapper icon-xl icon-indigo"><i data-lucide="target"></i></span></div>'
+                    + '<h3 style="color:#374151;margin:0 0 8px;">No Recommendations Yet</h3>'
+                    + '<p style="margin:0 0 20px;font-size:14px;">Enroll in courses to get personalized AI recommendations!</p>'
+                    + '<a href="browse-courses.html" style="padding:10px 24px;background:#6366f1;color:#fff;text-decoration:none;border-radius:10px;font-weight:600;font-size:14px;">Browse Courses</a>'
+                    + '</div>';
+                if (window.lucide) lucide.createIcons();
+            }
+        } catch(e) {
+            grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:#ef4444;">Error loading recommendations.</div>';
+        }
+    };
+    xhr.onerror = function() {
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:#ef4444;">Could not connect to server.</div>';
+    };
+    xhr.send();
+}
+
+function displayRecommendations(list) {
+    var grid = document.getElementById('recommendationsGrid');
+    if (!list.length) {
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#9ca3af;">No courses match your filter.</div>';
+        return;
+    }
+    grid.innerHTML = list.map(function(c) {
+        var matchScore = Math.round(c.recommendation_score * 10);
+        var badgeClass = c.difficulty_level === 'Beginner' ? 'badge-beginner' : c.difficulty_level === 'Intermediate' ? 'badge-intermediate' : 'badge-advanced';
+        var icon = getCourseEmoji(c.title);
+        var price = '₹' + parseFloat(c.price).toLocaleString('en-IN');
+        var rating = parseFloat(c.average_rating || 0).toFixed(1);
+        return '<div class="rec-card">'
+            + '<div class="rec-card-img">'
+            + icon
+            + '<span class="rec-card-badge ' + badgeClass + '">' + c.difficulty_level + '</span>'
+            + '<span class="ai-match-badge"><i data-lucide="bot" style="width:12px;height:12px;"></i> ' + matchScore + '% Match</span>'
+            + '</div>'
+            + '<div class="rec-card-body">'
+            + '<h3 class="rec-card-title">' + c.title + '</h3>'
+            + '<p class="rec-card-instructor"><i data-lucide="user" style="width:13px;height:13px;"></i> ' + c.instructor_name + '</p>'
+            + '<p class="rec-card-desc">' + (c.description || '') + '</p>'
+            + '<div class="rec-ai-reason"><i data-lucide="lightbulb" style="width:14px;height:14px;color:#f59e0b;flex-shrink:0;"></i><span>' + (c.recommendation_reason || 'Recommended for you') + '</span></div>'
+            + '<div class="rec-card-meta">'
+            + '<span><i data-lucide="star" style="width:13px;height:13px;color:#f59e0b;"></i> ' + rating + '</span>'
+            + '<span><i data-lucide="users" style="width:13px;height:13px;"></i> ' + (c.total_students || 0).toLocaleString('en-IN') + '</span>'
+            + '<span><i data-lucide="clock" style="width:13px;height:13px;"></i> ' + (c.duration_hours || 0) + 'h</span>'
+            + '</div>'
+            + '</div>'
+            + '<div class="rec-card-footer">'
+            + '<span class="rec-price">' + price + '</span>'
+            + '<button class="rec-enroll-btn" onclick="enrollCourse(' + c.id + ')">Enroll Now</button>'
+            + '</div>'
+            + '</div>';
+    }).join('');
+    if (window.lucide) lucide.createIcons();
+}
+
+function getCourseEmoji(title) {
+    var t = (title || '').toLowerCase();
+    if (t.includes('python')) return '🐍';
+    if (t.includes('javascript') || t.includes('js')) return '⚡';
+    if (t.includes('react')) return '⚛️';
+    if (t.includes('node')) return '🟢';
+    if (t.includes('web') || t.includes('html')) return '🌐';
+    if (t.includes('ai') || t.includes('machine')) return '🤖';
+    if (t.includes('data')) return '📊';
+    if (t.includes('mobile') || t.includes('android')) return '📱';
+    if (t.includes('c++') || t.includes('cpp')) return '⚙️';
+    if (t.includes('java')) return '☕';
+    return '📚';
+}
+
+function applySorting() {
+    var val = document.getElementById('sortFilter').value;
+    var sorted = allRecommendations.slice();
+    if (val === 'score') sorted.sort(function(a,b){return b.recommendation_score-a.recommendation_score;});
+    else if (val === 'rating') sorted.sort(function(a,b){return b.average_rating-a.average_rating;});
+    else if (val === 'popular') sorted.sort(function(a,b){return b.total_students-a.total_students;});
+    else if (val === 'price-low') sorted.sort(function(a,b){return parseFloat(a.price)-parseFloat(b.price);});
+    else if (val === 'price-high') sorted.sort(function(a,b){return parseFloat(b.price)-parseFloat(a.price);});
+    applyFilters(sorted);
+}
+
+function applyFilters(data) {
+    var list = data || allRecommendations;
+    var diff = document.getElementById('difficultyFilter').value;
+    if (diff !== 'all') list = list.filter(function(c){return c.difficulty_level === diff;});
+    displayRecommendations(list);
+}
+
+function enrollCourse(courseId) { window.location.href = 'browse-courses.html?highlight=' + courseId; }
+
+function logout() {
+    if (window.API) { window.API.logout(); return; }
+    localStorage.removeItem('session');
+    window.location.replace('login.html');
+}
+
+document.addEventListener('click', function(e) {
+    var dd = document.getElementById('userDropdown');
+    var profile = document.querySelector('.rec-user-profile');
+    if (dd && profile && !profile.contains(e.target)) dd.classList.remove('show');
+});
+</script>
+
+<link rel="stylesheet" href="styles/chatbot.css">
+<script src="scripts/chatbot.js"></script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievements - LearnAI</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/achievements.css">
+    <link rel="stylesheet" href="styles/icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="scripts/config.js"></script><script src="scripts/api.js"></script></head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2><a href="index.html" style="color: inherit; text-decoration: none;">LearnAI</a></h2>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-purple"><i data-lucide="layout-dashboard"></i></span></span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="my-courses.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-blue"><i data-lucide="book-open"></i></span></span>
+                    <span>My Courses</span>
+                </a>
+                <a href="browse-courses.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-indigo"><i data-lucide="search"></i></span></span>
+                    <span>Browse Courses</span>
+                </a>
+                <a href="progress.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-blue"><i data-lucide="bar-chart-3"></i></span></span>
+                    <span>Progress</span>
+                </a>
+                <a href="achievements.html" class="nav-item active">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-orange"><i data-lucide="trophy"></i></span></span>
+                    <span>Achievements</span>
+                </a>
+                <a href="test-series.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-purple"><i data-lucide="clipboard-list"></i></span></span>
+                    <span>Test Series</span>
+                </a>
+                <a href="messages.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-indigo"><i data-lucide="message-square"></i></span></span>
+                    <span>Messages</span>
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-green"><i data-lucide="user"></i></span></span>
+                    <span>My Profile</span>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-orange"><i data-lucide="settings"></i></span></span>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="nav-item" onclick="logout()">
+                    <span class="nav-icon"><span class="icon-3d-wrapper icon-sm icon-red"><i data-lucide="log-out"></i></span></span>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="topbar">
+                <h1><span class="icon-3d-wrapper icon-sm icon-orange" style="display: inline-flex; vertical-align: middle; margin-right: 12px;"><i data-lucide="trophy"></i></span> Achievements</h1>
+                <div class="user-section">
+                    <button class="notification-btn"><i data-lucide="bell"></i><span class="badge">3</span></button>
+                    <div class="user-profile" onclick="toggleUserMenu()">
+                        <img src="assets/default-avatar.png" alt="User" id="topbarAvatar">
+                        <span id="userName">User</span>
+                    </div>
+                    
+                    <!-- User Dropdown Menu -->
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <img src="assets/default-avatar.png" alt="User" id="dropdownAvatar">
+                            <div class="dropdown-user-info">
+                                <h4 id="dropdownName">User</h4>
+                                <p id="dropdownEmail">user@example.com</p>
+                            </div>
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.html"><span class="icon-3d-wrapper icon-sm icon-blue" style="margin-right: 10px;"><i data-lucide="home"></i></span> Home</a></li>
+                            <li><a href="dashboard.html"><span class="icon-3d-wrapper icon-sm icon-purple" style="margin-right: 10px;"><i data-lucide="layout-dashboard"></i></span> Dashboard</a></li>
+                            <li><a href="profile.html"><span class="icon-3d-wrapper icon-sm icon-green" style="margin-right: 10px;"><i data-lucide="user"></i></span> My Profile</a></li>
+                            <li><a href="settings.html"><span class="icon-3d-wrapper icon-sm icon-orange" style="margin-right: 10px;"><i data-lucide="settings"></i></span> Settings</a></li>
+                            <li class="dropdown-divider"></li>
+                            <li><a href="#" onclick="logout(); return false;"><span class="icon-3d-wrapper icon-sm icon-red" style="margin-right: 10px;"><i data-lucide="log-out"></i></span> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <!-- Achievement Stats -->
+                <div class="achievement-header">
+                    <div class="total-points">
+                        <h2><span class="icon-3d-wrapper icon-sm icon-orange" style="display: inline-flex; vertical-align: middle; margin-right: 8px;"><i data-lucide="trophy"></i></span> Total Points</h2>
+                        <p class="points-value" id="totalPoints">0</p>
+                    </div>
+                    <div class="achievement-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" id="achievementsUnlocked">0/0</span>
+                            <span class="stat-label">Achievements</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="coursesCompleted">0</span>
+                            <span class="stat-label">Courses Done</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="lessonsCompleted">0</span>
+                            <span class="stat-label">Lessons Done</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="currentStreak">0 days</span>
+                            <span class="stat-label">Current Streak</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div style="margin: 20px 0; padding: 20px; background: white; border-radius: 12px; border: 1px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                        <span style="font-weight: 600; color: #111827;">Overall Progress</span>
+                        <span class="progress-text" style="color: #6366f1; font-weight: 700;">0%</span>
+                    </div>
+                    <div style="width: 100%; height: 10px; background: #f3f4f6; border-radius: 5px; overflow: hidden; border: 1px solid #e5e7eb;">
+                        <div class="progress-fill" style="height: 100%; background: linear-gradient(90deg, #6366f1 0%, #a855f7 100%); width: 0%; transition: width 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);"></div>
+                    </div>
+                </div>
+
+                <!-- Filter Tabs -->
+                <div class="filter-tabs">
+                    <button class="tab-btn active" onclick="filterAchievements('all')">All</button>
+                    <button class="tab-btn" onclick="filterAchievements('unlocked')"><span class="icon-3d-wrapper icon-sm icon-green" style="margin-right: 5px;"><i data-lucide="unlock"></i></span> Unlocked</button>
+                    <button class="tab-btn" onclick="filterAchievements('locked')"><span class="icon-3d-wrapper icon-sm icon-red" style="margin-right: 5px;"><i data-lucide="lock"></i></span> Locked</button>
+                </div>
+
+                <!-- Achievements by Category -->
+                <div style="margin-top: 30px;">
+                    <div class="category-header">
+                         <h3 style="margin-bottom: 15px; color: #111827; display: flex; align-items: center; gap: 10px;">
+                            <span class="icon-3d-wrapper icon-sm icon-blue"><i data-lucide="book-open"></i></span> Course Achievements
+                        </h3>
+                    </div>
+                    <div class="achievements-grid" id="coursesGrid"></div>
+                    
+                    <div class="category-header" style="margin-top: 30px;">
+                        <h3 style="margin-bottom: 15px; color: #111827; display: flex; align-items: center; gap: 10px;">
+                            <span class="icon-3d-wrapper icon-sm icon-indigo"><i data-lucide="file-text"></i></span> Lesson Achievements
+                        </h3>
+                    </div>
+                    <div class="achievements-grid" id="lessonsGrid"></div>
+                    
+                    <div class="category-header" style="margin-top: 30px;">
+                         <h3 style="margin-bottom: 15px; color: #111827; display: flex; align-items: center; gap: 10px;">
+                            <span class="icon-3d-wrapper icon-sm icon-orange"><i data-lucide="flame"></i></span> Streak Achievements
+                        </h3>
+                    </div>
+                    <div class="achievements-grid" id="streakGrid"></div>
+                    
+                    <div class="category-header" style="margin-top: 30px;">
+                         <h3 style="margin-bottom: 15px; color: #111827; display: flex; align-items: center; gap: 10px;">
+                            <span class="icon-3d-wrapper icon-sm icon-purple"><i data-lucide="message-square"></i></span> Social Achievements
+                        </h3>
+                    </div>
+                    <div class="achievements-grid" id="socialGrid"></div>
+                    
+                    <div class="category-header" style="margin-top: 30px;">
+                        <h3 style="margin-bottom: 15px; color: #111827; display: flex; align-items: center; gap: 10px;">
+                            <span class="icon-3d-wrapper icon-sm icon-orange"><i data-lucide="star"></i></span> Special Achievements
+                        </h3>
+                    </div>
+                    <div class="achievements-grid" id="specialGrid"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="scripts/user-dropdown.js"></script>
+    <script src="scripts/achievements.js"></script>
+     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+             // Lucide icons are initialized inside achievements.js after rendering
+        });
+    </script>
+    
+    <!-- AI Chatbot Widget -->
+    <link rel="stylesheet" href="styles/chatbot.css">
+    <script src="scripts/chatbot.js"></script>
+</body>
+</html>
