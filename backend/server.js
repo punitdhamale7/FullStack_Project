@@ -4,7 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 const helmet = require('helmet');
-// require('dotenv').config();
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 58103;
@@ -212,8 +212,8 @@ app.get('/api/user/:id', (req, res) => {
     const query = 'SELECT id, full_name, username, email, phone, created_at, last_login FROM users WHERE id = ?';
     db.query(query, [userId], (err, results) => {
         if (err) {
-            console.error('Database error:', err);
-            return res.status(500).json({ success: false, message: 'Database error' });
+            console.error('Database error in user fetch:', err);
+            return res.status(500).json({ success: false, message: `Database error: ${err.message}` });
         }
         if (results.length === 0) {
             return res.status(404).json({ success: false, message: 'User not found' });
@@ -237,8 +237,8 @@ app.get('/api/profile/:userId', (req, res) => {
     `;
     db.query(query, [userId], (err, results) => {
         if (err) {
-            console.error('Database error:', err);
-            return res.status(500).json({ success: false, message: 'Database error' });
+            console.error('Database error in user fetch:', err);
+            return res.status(500).json({ success: false, message: `Database error: ${err.message}` });
         }
         if (results.length === 0) {
             return res.status(404).json({ success: false, message: 'User not found' });

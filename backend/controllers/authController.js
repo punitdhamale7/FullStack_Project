@@ -7,17 +7,18 @@ const { generateToken, generateRefreshToken } = require('../utils/jwt');
 
 
 exports.register = async (req, res) => {
+    console.log('Registration request received:', req.body);
     try {
         const { fullName, username, email, phone, password } = req.body;
 
-        
+
         const checkUserQuery = 'SELECT * FROM users WHERE email = ? OR username = ?';
         db.query(checkUserQuery, [email, username], async (err, results) => {
             if (err) {
                 console.error('Database error:', err);
                 return res.status(500).json({
                     success: false,
-                    message: 'Database error'
+                    message: `Database error: ${err.message}`
                 });
             }
 
@@ -28,10 +29,10 @@ exports.register = async (req, res) => {
                 });
             }
 
-            
+
             const hashedPassword = await bcrypt.hash(password, 10);
 
-            
+
             const insertQuery = `
                 INSERT INTO users (full_name, username, email, phone, password, created_at) 
                 VALUES (?, ?, ?, ?, ?, NOW())
@@ -42,14 +43,11 @@ exports.register = async (req, res) => {
                     console.error('Error inserting user:', err);
                     return res.status(500).json({
                         success: false,
-                        message: 'Error creating user account'
+                        message: `Error creating user account: ${err.message}`
                     });
                 }
 
-                
-                emailService.sendWelcomeEmail(fullName, email)
-                    .then(() => console.log(`Welcome email sent to ${email}`))
-                    .catch(err => console.error('Failed to send welcome email:', err.message));
+
 
                 res.status(201).json({
                     success: true,
@@ -72,7 +70,7 @@ exports.login = async (req, res) => {
     try {
         const { emailOrUsername, password } = req.body;
 
-        
+
         const query = 'SELECT * FROM users WHERE email = ? OR username = ?';
         db.query(query, [emailOrUsername, emailOrUsername], async (err, results) => {
             if (err) {
@@ -92,7 +90,7 @@ exports.login = async (req, res) => {
 
             const user = results[0];
 
-            
+
             const isPasswordValid = await bcrypt.compare(password, user.password);
 
             if (!isPasswordValid) {
@@ -102,15 +100,15 @@ exports.login = async (req, res) => {
                 });
             }
 
-            
+
             const updateLoginQuery = 'UPDATE users SET last_login = NOW() WHERE id = ?';
             db.query(updateLoginQuery, [user.id]);
 
-            
+
             const accessToken = generateToken(user.id, user.email, user.role || 'user');
             const refreshToken = generateRefreshToken(user.id);
 
-            
+
             res.json({
                 success: true,
                 message: 'Login successful',
@@ -148,7 +146,7 @@ exports.forgotPassword = (req, res) => {
         });
     }
 
-    
+
     const userQuery = 'SELECT id, full_name, email FROM users WHERE email = ?';
     db.query(userQuery, [email], (err, results) => {
         if (err) {
@@ -168,11 +166,11 @@ exports.forgotPassword = (req, res) => {
 
         const user = results[0];
 
-        
-        const resetToken = crypto.randomBytes(32).toString('hex');
-        const expiresAt = new Date(Date.now() + 3600000); 
 
-        
+        const resetToken = crypto.randomBytes(32).toString('hex');
+        const expiresAt = new Date(Date.now() + 3600000);
+
+
         const insertTokenQuery = `
             INSERT INTO password_reset_tokens (user_id, token, expires_at) 
             VALUES (?, ?, ?)
@@ -187,7 +185,7 @@ exports.forgotPassword = (req, res) => {
                 });
             }
 
-            
+
             emailService.sendPasswordResetEmail(user.full_name, user.email, resetToken)
                 .then(() => {
                     res.json({
@@ -252,7 +250,7 @@ exports.resetPassword = async (req, res) => {
         });
     }
 
-    
+
     const tokenQuery = `
         SELECT user_id 
         FROM password_reset_tokens 
@@ -278,10 +276,10 @@ exports.resetPassword = async (req, res) => {
         const userId = results[0].user_id;
 
         try {
-            
+
             const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-            
+
             const updatePasswordQuery = 'UPDATE users SET password = ? WHERE id = ?';
             db.query(updatePasswordQuery, [hashedPassword, userId], (err) => {
                 if (err) {
@@ -292,7 +290,7 @@ exports.resetPassword = async (req, res) => {
                     });
                 }
 
-                
+
                 const markUsedQuery = 'UPDATE password_reset_tokens SET used = TRUE WHERE token = ?';
                 db.query(markUsedQuery, [token]);
 
@@ -324,7 +322,7 @@ exports.adminLogin = (req, res) => {
     }
 
     if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-        
+
         const accessToken = generateToken(0, ADMIN_EMAIL, 'admin');
         const refreshToken = generateRefreshToken(0);
 
@@ -362,9 +360,9 @@ exports.refreshToken = (req, res) => {
     }
 
     try {
-        
+
         const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
-        
+
         if (decoded.type !== 'refresh') {
             return res.status(401).json({
                 success: false,
@@ -372,7 +370,7 @@ exports.refreshToken = (req, res) => {
             });
         }
 
-        
+
         const userQuery = 'SELECT id, email, role FROM users WHERE id = ?';
         db.query(userQuery, [decoded.userId], (err, results) => {
             if (err || results.length === 0) {
@@ -383,8 +381,8 @@ exports.refreshToken = (req, res) => {
             }
 
             const user = results[0];
-            
-            
+
+
             const newAccessToken = generateToken(user.id, user.email, user.role || 'user');
 
             res.json({
